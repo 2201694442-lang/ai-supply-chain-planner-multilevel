@@ -1,5 +1,9 @@
 import { useRef, useState } from "react";
+import axios from "axios";
 import "./index.css";
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "https://ai-supply-chain-planner.onrender.com";
 
 function SummaryCard({ title, value, subtitle }) {
   return (
@@ -23,6 +27,13 @@ function Panel({ title, children }) {
 function App() {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const [summary, setSummary] = useState({
+    total_rows: 0,
+    shortage_rows: 0,
+    total_shortage: 0,
+  });
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -32,6 +43,21 @@ function App() {
     const file = event.target.files?.[0];
     if (file) {
       setSelectedFile(file);
+    }
+  };
+
+  const handleStartAnalysis = async () => {
+    try {
+      setLoading(true);
+
+      const response = await axios.post(`${API_BASE_URL}/analyze-demo`);
+
+      setSummary(response.data.summary);
+    } catch (error) {
+      console.error("Analysis failed:", error);
+      alert("Analysis failed. Please check backend status or CORS settings.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,8 +101,12 @@ function App() {
                   Upload File
                 </button>
 
-                <button className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
-                  Start Analysis
+                <button
+                  onClick={handleStartAnalysis}
+                  disabled={loading}
+                  className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:opacity-60"
+                >
+                  {loading ? "Analyzing..." : "Start Analysis"}
                 </button>
               </div>
 
@@ -126,18 +156,18 @@ function App() {
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <SummaryCard
-              title="Total Materials"
-              value="120"
-              subtitle="materials in scope"
+              title="Total Rows"
+              value={summary.total_rows}
+              subtitle="result rows"
             />
             <SummaryCard
-              title="Shortage Materials"
-              value="18"
-              subtitle="at risk"
+              title="Shortage Rows"
+              value={summary.shortage_rows}
+              subtitle="shortage records"
             />
             <SummaryCard
               title="Total Shortage Qty"
-              value="3200"
+              value={summary.total_shortage}
               subtitle="units missing"
             />
           </div>
