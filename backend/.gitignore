@@ -1,0 +1,5 @@
+temp/
+uploaded_files/
+__pycache__/
+*.pyc
+.DS_Store
