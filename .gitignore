@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+
+# root mistake
+node_modules/
+
+# backend runtime
+backend/temp/
+backend/uploaded_files/
+
+# env
+.env
+.env.*
