@@ -139,6 +139,15 @@ def root():
 def health():
     return {"status": "ok"}
 
+@app.get("/debug-paths")
+def debug_paths():
+    return {
+        "base_dir": str(BASE_DIR),
+        "demo_file": str(DEMO_FILE),
+        "demo_exists": DEMO_FILE.exists(),
+        "upload_dir": str(UPLOAD_DIR),
+        "temp_dir": str(TEMP_DIR),
+    }
 
 @app.post("/analyze-demo")
 def analyze_demo():
