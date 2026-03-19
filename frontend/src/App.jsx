@@ -16,7 +16,7 @@ import {
 import "./index.css";
 import HeatmapSection from "./components/HeatmapSection";
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "https://ai-supply-chain-planner.onrender.com";
 
 
 function SummaryCard({ title, value, subtitle }) {
