@@ -20,13 +20,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-UPLOAD_DIR = Path("uploaded_files")
-UPLOAD_DIR.mkdir(exist_ok=True)
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-TEMP_DIR = Path("temp")
-TEMP_DIR.mkdir(exist_ok=True)
+UPLOAD_DIR = BASE_DIR / "uploaded_files"
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
-DEMO_FILE = Path("data/sample_input.xlsx")
+TEMP_DIR = BASE_DIR / "temp"
+TEMP_DIR.mkdir(parents=True, exist_ok=True)
+
+DEMO_FILE = BASE_DIR / "data" / "sample_input.xlsx"
 
 def format_heatmap(result_df):
     df = result_df.copy()
