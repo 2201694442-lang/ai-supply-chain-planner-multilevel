@@ -16,7 +16,8 @@ import {
 import "./index.css";
 import HeatmapSection from "./components/HeatmapSection";
 
-const API_BASE_URL = "https://ai-supply-chain-planner.onrender.com";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
 
 function SummaryCard({ title, value, subtitle }) {

@@ -28,7 +28,7 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 TEMP_DIR = BASE_DIR / "temp"
 TEMP_DIR.mkdir(parents=True, exist_ok=True)
 
-DEMO_FILE = BASE_DIR / "data" / "sample_input.xlsx"
+DEMO_FILE = BASE_DIR / "data" / "ai_infra_supply_chain_demo.xlsx"
 
 def format_heatmap(result_df):
     df = result_df.copy()
